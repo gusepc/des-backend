@@ -46,7 +46,7 @@ class ProductManager {
 
 //testing
 
-
+/*
 
 const productManager = new ProductManager()
 console.log(productManager.getProducts());
@@ -78,3 +78,4 @@ console.log("productos existentes:", productManager.getProducts());
 productManager.getProductById(2);
 productManager.getProductById(5);
 
+*/
