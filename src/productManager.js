@@ -1,6 +1,6 @@
 import fs from "fs"
 
-class ProductManager{
+export class ProductManager {
     constructor(nombreDeArchivo){
         this.path = nombreDeArchivo
         this.products 
@@ -115,64 +115,17 @@ class ProductManager{
 
 }
 
-//testing
-// 1
 
 // const productManager = new ProductManager("myArchivo.json")
 
-// 2
+// for (let i = 0; i < 11; i++) {
 
-// console.log(productManager.getProducts());
-
-
-// 3 y 4
-
-// productManager.addProduct({title: 'producto prueba',
-//     description:'Este es un producto prueba',
-//     price:200,
+//     productManager.addProduct({title: `Producto ${i}`,
+//     description:`Este es el producto prueba ${i}`,
+//     price: i * 10 ,
 //     thumbnail:'Sin imagen',
-//     code:'abc123',
-//     stock:25
+//     code: i,
+//     stock: i * 10
 //     })
-//     productManager.addProduct({title: 'producto prueba',
-//     description:'Este es un producto prueba',
-//     price:200,
-//     thumbnail:'Sin imagen',
-//     code:'abc123',
-//     stock:25
-//     })
-//     productManager.addProduct({title: 'producto prueba',
-//     description:'Este es un producto prueba',
-//     price:200,
-//     thumbnail:'Sin imagen',
-//     code:'abc1234',
-//     stock:25
-//     })
+// }
 
-// 5
-
-    // console.log("lista de productos:",productManager.getProducts());
-    
-// 6
-
-// productManager.getProductById(1);
-// productManager.getProductById(5);
-
-// 7
-
-// const productoActualizado =
-//     {title: 'producto actualizado',
-//         description:'Este es un producto actualizado',
-//         price:200,
-//         thumbnail:'Sin imagen',
-//         code:'abc1234',
-//         stock:25
-//         }
-
-// productManager.updateProduct(1, productoActualizado,)
-// productManager.updateProduct(3, productoActualizado,)
-
-// 8
-
-// productManager.deleteProduct(1)
-// productManager.deleteProduct(3)
