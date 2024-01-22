@@ -71,7 +71,7 @@ router.put("/api/carts/:cid/product/:id", (req, res)=>{
 
 
         } catch (error) {
-            res.send("no se pudo completar tu peticion"); 
+            res.send("no se pudo completar tu petición"); 
         }
 
 
