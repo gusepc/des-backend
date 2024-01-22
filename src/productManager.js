@@ -1,10 +1,9 @@
 import fs from "fs"
 
-export class ProductManager {
+class ProductManager {
     constructor(nombreDeArchivo){
         this.path = nombreDeArchivo
-        this.products 
-        this.productId = 0
+        // this.products 
         if(!fs.existsSync(this.path)){
             try {
                 fs.writeFileSync(this.path, "[]")
@@ -21,22 +20,22 @@ export class ProductManager {
 
     convertirArchivo(){
         try {
-        this.products = JSON.parse(fs.readFileSync(this.path, "utf8"))
+        this.products = JSON.parse(fs.readFileSync(this.path))
             
         } catch (error) {
             console.log("no se pudieron obtener los datos correctamente");
             this.products = []
         }
-
     }
+    
     escribirProducto(){
         try {
                     fs.writeFileSync(this.path, JSON.stringify(this.products))
         } catch (error) {
             console.log("Error al agregar productos");
         }
-
     }
+
     updateProduct(pId, actualizacion) {
         this.convertirArchivo()
         const i = this.products.findIndex(product => product.id === pId)
@@ -54,7 +53,8 @@ export class ProductManager {
     }
     deleteProduct(pId) {
         this.convertirArchivo()
-        const i = this.products.findIndex(product => product.id === pId)
+        const i = this.products.findIndex(product => product.id == pId)
+        console.log(pId);
         if (i !== -1) {
             const deletedProduct = this.products.splice(i, 1)[0]
             this.escribirProducto()
@@ -74,30 +74,34 @@ export class ProductManager {
     }
     addProduct(product){
         this.convertirArchivo()
-        const {title,description,price,thumbnail,code,stock} = product
+        const {title,description,price,stock,status = true,category,thumbnail,code,} = product
         if (
             !product.title ||
             !product.description ||
             !product.price ||
-            !product.thumbnail || 
-            !product.code ||
-            !product.stock)
-        {return console.log("Todos los campos son obligatorios")}
+            !product.stock ||
+            !product.status ||
+            !product.category ||
+            // product.thumbnail || 
+            !product.code 
+            )
+        {return console.log("Todos los campos son obligatorios, excepto thumbnail")}
 
         if (this.products.some(product => product.code === code)) {
             return console.log("Ya existe un producto con este codigo")
         }
         const newProduct = {
+            id: this.products.length + 1,
             title,
             description,
             price,
+            stock,
+            status, 
+            category,
             thumbnail,
             code,
-            stock,
-            id: this.productId + 1,
           };
           this.products.push(newProduct)
-          this.productId++
           console.log("se ha agredado un producto existosamente:", newProduct)
           this.escribirProducto()
     }
@@ -115,17 +119,21 @@ export class ProductManager {
 
 }
 
+export default ProductManager
 
-// const productManager = new ProductManager("myArchivo.json")
+
+// const productManager = new ProductManager("products.json")
 
 // for (let i = 0; i < 11; i++) {
 
 //     productManager.addProduct({title: `Producto ${i}`,
 //     description:`Este es el producto prueba ${i}`,
 //     price: i * 10 ,
+//     stock: i * 10,
+//     status: true,
+//     category: `productos`,
 //     thumbnail:'Sin imagen',
 //     code: i,
-//     stock: i * 10
-//     })
+// })
 // }
 
