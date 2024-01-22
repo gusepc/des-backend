@@ -52,12 +52,7 @@ router.put("/api/carts/:cid/product/:id", (req, res)=>{
             let carts = JSON.parse(fsPromises.readFileSync("./carts.json"))
             let products = JSON.parse(fsPromises.readFileSync("./products.json"))
             
-            // let cartById =   carts.find( carts => carts.cartId == cartId)
-            // let idToCart = cartById.cartId
-            // let product = products.find( p => p.id == productId)
-            // let pushId = product.id 
-            // cartManager.updateCart(idToCart, pushId)
-            // res.send("se agregro un producto a tu carrito")
+
             if (carts.find( c => c.cartId == cartId) && products.find( p => p.id == productId)) {
                 let cartById =   carts.find( carts => carts.cartId == cartId)
                 let idToCart = cartById.cartId
