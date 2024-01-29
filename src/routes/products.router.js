@@ -1,31 +1,24 @@
 import express from "express";
 import fsPromises from "fs"
-import ProductManager from "../productManager.js"
-
-
-
-
-
+import ProductManager from "../controller/productManager.js"
 
 const router = express.Router()
 router.use(express.json())
 
 const productManager = new ProductManager("products.json")
+const products = JSON.parse(fsPromises.readFileSync("src/data/products.json"))
 
 //Create
 
 router.post("/api/products",(req, res)=>{
     try {
         const newProduct = req.body
-        let products = JSON.parse(fsPromises.readFileSync("./products.json"))
         let numProducts = (products.length)
         productManager.addProduct(newProduct)
-        let productList = JSON.parse(fsPromises.readFileSync("./products.json"))
+        let productList = JSON.parse(fsPromises.readFileSync("src/data/products.json"))
         let aumento = productList.length
-        console.log(aumento);
         if (numProducts < aumento) {
             res.send("se creo tu producto")
-            
         }
         else{
             res.send("no se pudo crear tu producto")
@@ -37,24 +30,23 @@ router.post("/api/products",(req, res)=>{
 
 })
 
+
 //read
 
 router.get("/api/products",(req, res)=>{
     try {
         let limit = parseInt(req.query.limit)
-        let limitedProducts = JSON.parse(fsPromises.readFileSync("./products.json"))
         if (!req.query.limit) {
             res.send(productManager.getProducts())
         }
-        else if (!isNaN(limit) && 0 < limit && limit <= limitedProducts.length) {
-            limitedProducts = limitedProducts.slice(0, limit) 
-            res.send(limitedProducts)
+        else if (!isNaN(limit) && 0 < limit && limit <= products.length) {
+            products = products.slice(0, limit) 
+            res.send(products)
         }else{
-            console.log(limitedProducts.length,"aaaaa");
             res.send(`Lo sentimos, "${req.query.limit}" no es un argumento valido`)
         }
     } catch (error) {
-        res.send("no se pudo completar tu peticion")
+        res.send("no se pudo completar tu peticioooon")
     }
 
 })
@@ -62,7 +54,6 @@ router.get("/api/products",(req, res)=>{
 router.get('/api/products/:id',(req, res)=>{
     try {
         let id = parseInt(req.params.id)
-        let products = JSON.parse(fsPromises.readFileSync("./products.json"))
         if (products.find( p => p.id == id)) {
             let productById = products.find(p=> p.id == id)
             res.send(productById)
@@ -82,7 +73,6 @@ router.put('/api/products/:id',(req, res)=>{
     try {
         let id = parseInt(req.params.id)
         const updatedProdduct = req.body
-        let products = JSON.parse(fsPromises.readFileSync("./products.json"))
         if (products.find( p => p.id == id)) {
             productManager.updateProduct(id, updatedProdduct)
             res.send("se actualizo tu producto")
@@ -106,8 +96,6 @@ router.put('/api/products/:id',(req, res)=>{
 router.delete('/api/products/:id',(req, res)=>{
     try {
         let id = parseInt(req.params.id)
-        let products = JSON.parse(fsPromises.readFileSync("./products.json"))
-
         if (products.find( p => p.id == id)) {
             const pId = products.find( p => p.id == id)
             let realId = pId.id

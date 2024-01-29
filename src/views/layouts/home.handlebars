@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>Aqui es index.handlebars</h1>
+    {{#each product}}
+
+<ul>
+    <li>id: {{this.id}}</li>
+    <li>title: {{this.title}}</li>
+    <li>description: {{this.description}}</li>
+    <li>price: {{this.price}}</li>
+    <li>stock: {{this.stock}}</li>
+    <li>status: {{this.status}}</li>
+    <li>category: {{this.category}}</li>
+    <li>thumbnail: {{this.thumbnail}}</li>
+    <li>code: {{this.code}}</li>
+</ul> 
+
+
+    {{/each}}
+
+</body>
+</html>

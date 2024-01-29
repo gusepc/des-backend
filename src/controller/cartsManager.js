@@ -2,8 +2,8 @@ import fs from "fs"
 
 class CartManager{
     constructor(nombreDelArchivo){
-        this.path = nombreDelArchivo
-    
+        this.path = `src/data/${nombreDelArchivo}`
+
     if(!fs.existsSync(this.path)){
         try {
             fs.writeFileSync(this.path, "[]")
@@ -12,9 +12,7 @@ class CartManager{
             console.log("no se pudo crear el archivo");
         }
     }
-    else {
-        console.log("el directorio que intentas crear ya existe:");
-    }
+
 }
     convertirArchivo(){
         try {

@@ -2,8 +2,8 @@ import fs from "fs"
 
 class ProductManager {
     constructor(nombreDeArchivo){
-        this.path = nombreDeArchivo
-        // this.products 
+        this.path = `src/data/${nombreDeArchivo}`
+
         if(!fs.existsSync(this.path)){
             try {
                 fs.writeFileSync(this.path, "[]")
@@ -11,9 +11,6 @@ class ProductManager {
             } catch (error) {
                 console.log("no se pudo crear el archivo");
             }
-        }
-        else {
-            console.log("el archivo que intentas crear ya existe:");
         }
     }
     //seccion fs
@@ -30,7 +27,7 @@ class ProductManager {
     
     escribirProducto(){
         try {
-                    fs.writeFileSync(this.path, JSON.stringify(this.products))
+            fs.writeFileSync(this.path, JSON.stringify(this.products))
         } catch (error) {
             console.log("Error al agregar productos");
         }
@@ -82,7 +79,6 @@ class ProductManager {
             !product.stock ||
             !product.status ||
             !product.category ||
-            // product.thumbnail || 
             !product.code 
             )
         {return console.log("Todos los campos son obligatorios, excepto thumbnail")}
