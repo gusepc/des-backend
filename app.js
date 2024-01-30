@@ -7,11 +7,18 @@ import { Server } from "socket.io";
 import path from "path"
 
 
+
+
+import ProductManager from "./src/controller/productManager.js";
+
+const productManager = new ProductManager("products.json")
+
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(path.join("src/public")))
+app.use(express.static(path.join("src/controller")))
 
 app.use("/", productsRouter)
 app.use("/", cartsRouter)
@@ -25,10 +32,19 @@ app.set('views', 'src/views')
 const httpServer = app.listen(8080,()=>console.log("server started"));
 
 const socketServer = new Server(httpServer)
+export default socketServer
 
 socketServer.on("connection", (socket) => {
 console.log('usuario conectado')
-socket.on('message', data =>{
-console.log(data);
+socket.on("message", data => {
+    console.log(data)})
+
+    socket.on("nuevoProducto", (newProduct) => {
+        console.log("Nuevo producto recibido en el servidor:", newProduct);
+    
+        socketServer.emit("nuevoProducto", newProduct);
+        productManager.addProduct(newProduct)
+
 })
 })
+

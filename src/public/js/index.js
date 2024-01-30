@@ -1,5 +1,12 @@
 const socket = io()
+
+
+
+
 socket.emit("message", "cliente conectado")
+
+
+document.getElementById("button").addEventListener("click", (e) => {
 
 const title = document.getElementById("title").value
 const description = document.getElementById("description").value
@@ -18,4 +25,14 @@ const newProduct  = {
     category,
     code,
 }
-console.log(newProduct);
+socket.emit("nuevoProducto", newProduct, (response) => {
+    console.log("Respuesta del servidor:", response);
+    productManager.addProduct(newProduct)
+});
+
+})
+
+socket.on("nuevoProducto", (newProduct) => {
+    console.log("Nuevo producto recibido desde el servidor:", newProduct);
+});
+
