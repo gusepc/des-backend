@@ -51,7 +51,7 @@ class ProductManager {
     deleteProduct(pId) {
         this.convertirArchivo()
         const i = this.products.findIndex(product => product.id == pId)
-        console.log(pId);
+
         if (i !== -1) {
             const deletedProduct = this.products.splice(i, 1)[0]
             this.escribirProducto()
@@ -98,7 +98,6 @@ class ProductManager {
             code,
           };
           this.products.push(newProduct)
-          console.log("se ha agredado un producto existosamente:", newProduct)
           this.escribirProducto()
     }
     getProductById(pId){

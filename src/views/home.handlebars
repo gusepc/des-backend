@@ -6,7 +6,10 @@
     <title>{{title}}</title>
 </head>
 <body>
-    <h1>Aqui es index.handlebars</h1>
+    <h1>Lista de productos</h1>
+
+    <div id="list-container" style="display: flex;align-content: space-between;flex-wrap: wrap;"">
+
     {{#each product}}
 
 <ul>
@@ -23,6 +26,7 @@
 
 
     {{/each}}
+    </div>
 
 </body>
 </html>

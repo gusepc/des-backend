@@ -9,27 +9,19 @@ const products = JSON.parse(fsPromises.readFileSync("src/data/products.json"))
 
 
 router.get('/', (req, res) => {
-    res.render("index", {
-        layout: "home",
+    res.render("home", {
+        layout: "main",
         product: products,
-        title: "realtimeproducts"
+        title: "home"
     })
 })
 
 router.get('/realtimeproducts', (req, res)=>{
-        res.render("index", {
-            layout: "realTimeProducts",
-            product: products,
+        res.render("realTimeProducts", {
+            layout: "main",
             title: "realtimeproducts"
         })
 })
-router.post('/realtimeproducts', (req, res)=>{
-    let products = JSON.parse(fsPromises.readFileSync("src/data/products.json"))
-    res.render("index", {
-        layout: "realTimeProducts",
-        product: products,
-        title: "realtimeproducts"
-    })
-})
+
 
 export default router

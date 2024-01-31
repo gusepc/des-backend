@@ -5,10 +5,6 @@ import viewsRouter from "./src/routes/views.router.js"
 import {engine} from "express-handlebars"
 import { Server } from "socket.io";
 import path from "path"
-
-
-
-
 import ProductManager from "./src/controller/productManager.js";
 
 const productManager = new ProductManager("products.json")
@@ -32,19 +28,29 @@ app.set('views', 'src/views')
 const httpServer = app.listen(8080,()=>console.log("server started"));
 
 const socketServer = new Server(httpServer)
-export default socketServer
+
 
 socketServer.on("connection", (socket) => {
 console.log('usuario conectado')
+try {
+    const products = productManager.getProducts()
+    socketServer.emit("envioProductos", products)
+    
+} catch (error) {
+   
+}
+
+
 socket.on("message", data => {
     console.log(data)})
 
-    socket.on("nuevoProducto", (newProduct) => {
-        console.log("Nuevo producto recibido en el servidor:", newProduct);
-    
-        socketServer.emit("nuevoProducto", newProduct);
+socket.on("nuevoProducto", (newProduct) => {
+
         productManager.addProduct(newProduct)
+        const products = productManager.getProducts()
+        socketServer.emit("envioProductos", products)
+        
 
+    })
 })
-})
-
+    

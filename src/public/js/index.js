@@ -1,13 +1,30 @@
 const socket = io()
-
-
-
-
 socket.emit("message", "cliente conectado")
+socket.on("envioProductos", (products)=>{
+    const listContainer = document.getElementById("list-container")
+    listContainer.innerHTML = ``
+    products.forEach(product => {
+        listContainer.innerHTML +=
+        `
+        <ul>
+    <li>id: ${product.id}</li>
+    <li>title: ${product.title}</li>
+    <li>description: ${product.description}</li>
+    <li>price: ${product.price}</li>
+    <li>stock: ${product.stock}</li>
+    <li>status: ${product.status}</li>
+    <li>category: ${product.category}</li>
+    <li>thumbnail: ${product.thumbnail}</li>
+    <li>code: ${product.code}</li>
+</ul> `
+        
+    });
+})
+
 
 
 document.getElementById("button").addEventListener("click", (e) => {
-
+e.preventDefault()
 const title = document.getElementById("title").value
 const description = document.getElementById("description").value
 const price = document.getElementById("price").value
@@ -25,14 +42,9 @@ const newProduct  = {
     category,
     code,
 }
-socket.emit("nuevoProducto", newProduct, (response) => {
-    console.log("Respuesta del servidor:", response);
-    productManager.addProduct(newProduct)
-});
+socket.emit("nuevoProducto", newProduct);
 
 })
 
-socket.on("nuevoProducto", (newProduct) => {
-    console.log("Nuevo producto recibido desde el servidor:", newProduct);
-});
+
 
